@@ -1,0 +1,31 @@
+{
+  "name": "sourdough hydration calculator - alpinejs version",
+  "version": 1,
+  "homepage": "",
+  "author": {
+    "name": "Sue Carson",
+    "url": "https://github.com/goplano"
+  },
+  "scripts": {
+    "watch": "gulp livePreview",
+    "clean": "gulp clean",
+    "dev": "npm run clean; gulp dev",
+    "prod": "npm run clean; gulp build",
+    "build": "npm run prod"
+  },
+  "bugs": "issues link",
+  "devDependencies": {
+    "autoprefixer": "^10.2.3",
+    "browser-sync": "^2.26.13",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-cli": "^2.3.0",
+    "gulp-postcss": "^9.0.0",
+    "gulp-purgecss": "^4.0.0",
+    "log-symbols": "^4.0.0",
+    "postcss": "^8.2.4",
+    "postcss-cli": "^8.3.1",
+    "tailwindcss": "^2.0.2"
+  }
+}

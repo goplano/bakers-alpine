@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <title>Sourdough Hyrdation Calculator using alpinejs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="main.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.js"></script>
+</head>
+<body class="h-full">
+<div class="mx-auto p-4  flex justify-items-center items-center content-center h-full" x-data="bakers()">
+    <div class=" mx-auto bg-gray-100 ">
+        <span @weight-updated="calculateFromWeights"></span>
+        <span @percent-updated="calculateFromPercents"></span>
+        <div id="calctype" class="flex items-center">
+            <div class="flex-initial">Start with</div>
+            <div class="switch-field flex-initial px-4">
+                <input type="radio" id="btnWeights" value="weights" checked="isWeights" x-model="computationType"/>
+                <label for="btnWeights">g</label>
+                <input type="radio" id="btnPercents" value="percents" checked="isPercents" x-model="computationType"/>
+                <label for="btnPercents">%</label>
+            </div>
+            <div class="flex-initial">
+                <span x-text="computationType">Not set</span>
+            </div>
+        </div>
+
+        <div id="vwg-switch" class="flex items-center">
+            <input id="btnUseVitalWheatGluten" class="toggle" type="checkbox" name="vwg" x-model="useVWG"/>
+            <label for="btnUseVitalWheatGluten"
+                   title="Vital wheat gluten adds protein and a little more structure."
+                   class="pl-2">Use Vital Wheat Gluten</label>
+        </div>
+
+        <form action="#" onsubmit="return false;" class="p-1 m-4 max-w-lg">
+            <div class="my-2">
+                <label for="totalweight">Total weight: </label>
+                <input type="text" id="totalweight"
+                       x-model="totalWeight"
+                       :class="percentsInputClass"
+                       :tabindex="tabPercents"
+                       x-bind:readonly="isWeights"
+                       x-on:input.debounce.750="calculate">
+            </div>
+            <div class="my-2">
+                <span x-text="totalWater"></span>g water / <span x-text="totalFlour"></span>g flour =
+                <input type="text" id="pTotalWater"
+                       :class="percentsInputClass"
+                       :tabindex="tabPercents"
+                       x-model="hydration"
+                       x-bind:readonly="isWeights"> %
+                <label for="pTotalWater">Hydration</label>
+            </div>
+
+            <div class="bg-transparent border-0 rounded-md p-4 flex justify-center h-48">
+
+                <table class="table-auto">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Grams</th>
+                        <th>%</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><label for="mainflour"></label>flour</td>
+                        <td>
+                            <input type="text" id="mainflour"
+                                   x-model="flour"
+                                   :class="weightsInputClass"
+                                   :tabindex="tabWeights"
+                                   x-bind:readonly="isPercents">
+                        </td>
+                        <td>
+                            <input type="text" id="pmainflour"
+                                   x-model="pflour"
+                                   :class="percentsInputClass"
+                                   :tabindex="tabPercents"
+                                   x-bind:readonly="isWeights">
+                        </td>
+                    </tr>
+                    <tr id="vwg-input-row" x-show="useVWG">
+                        <td><label for="addlflour">VWG</label></td>
+                        <td>
+                            <input type="text" id="addlflour" readonly="readonly" x-model="vwg"
+                                   :class="weightsInputClass"
+                                   :tabindex="tabWeights"
+                                   x-bind:readonly="isPercents">
+                        </td>
+                        <td>
+                            <input type="text" id="paddlflour"
+                                   name="vwg" x-model="pvwg"
+                                   :class="percentsInputClass"
+                                   :tabindex="tabPercents"
+                                   x-bind:readonly="isWeights">
+                        </td>
+                    </tr>
+                    <tr data-type="water">
+                        <td><label for="water">water</label></td>
+                        <td>
+                            <input type="text" id="water" name="water" x-model="water"
+                                   :class="weightsInputClass"
+                                   :tabindex="tabWeights"
+                                   x-bind:readonly="isPercents">
+                        </td>
+                        <td>
+                            <input type="text" id="pwater" name="pwater"
+                                   x-model="pwater"
+                                   :class="percentsInputClass"
+                                   :tabindex="tabPercents"
+                                   x-bind:readonly="isWeights">
+                        </td>
+                    </tr>
+                    <tr data-type="salt">
+                        <td><label for="salt">salt</label></td>
+                        <td>
+                            <input type="text" id="salt" name="salt" x-model="salt"
+                                   :class="weightsInputClass"
+                                   :tabindex="tabWeights"
+                                   x-bind:readonly="isPercents">
+                        </td>
+                        <td>
+                            <input type="text" id="psalt" name="psalt"
+                                   x-model="psalt"
+                                   :class="percentsInputClass"
+                                   :tabindex="tabPercents"
+                                   x-bind:readonly="isWeights">
+                        </td>
+                    </tr>
+                    <tr data-type="starter">
+                        <td><label for="starter">starter</label></td>
+                        <td><input type="text" id="starter" name="starter" x-model="starter"
+                                   :class="weightsInputClass"
+                                   :tabindex="tabWeights"
+                                   x-bind:readonly="isPercents">
+                        </td>
+                        <td>
+                            <input id="pstarter" name="pstarter"
+                                   type="text" x-model="pstarter"
+                                   :class="percentsInputClass"
+                                   :tabindex="tabPercents"
+                                   x-bind:readonly="isWeights">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="text-sm">
+                * Assumes 100% hydration starter
+            </p>
+        </form>
+    </div>
+</div>
+<script>
+    function bakers() {
+        return {
+            computationType: 'percents',
+            usingVWG: false,
+            hidden: {
+                totalWeight: 900,
+                hydration: 73,
+                pflour: 0,
+                pwater: 0,
+                pvwg: 0,
+                psalt: 1.5,
+                pstarter: 15,
+                flour: 481,
+                water: 341,
+                vwg: 0,
+                salt: 8,
+                starter: 78,
+
+            },
+            get pflour() {
+                this.hidden.pflour = 100 * this.flour / this.totalFlour;
+                return Math.round(this.hidden.pflour * 10) / 10;
+            },
+            set pflour(val) {
+                this.hidden.pflour = val;
+            },
+            get pwater() {
+                this.hidden.pwater = this.water / this.totalFlour * 100;
+                return Math.round(this.hidden.pwater * 10) / 10;
+            },
+            set pwater(val) {
+                this.hidden.pwater = val;
+            },
+            get pvwg() {
+                this.hidden.pvwg = 100 * this.vwg / this.totalFlour;
+                return Math.round(this.hidden.pvwg * 10) / 10;
+            },
+            set pvwg(val) {
+                this.hidden.pvwg = val;
+            },
+
+            get psalt() {
+                if (this.isWeights) {
+                    this.hidden.psalt = this.salt / this.totalFlour * 100;
+                }
+                return this.hidden.psalt;
+            },
+            set psalt(val) {
+                this.hidden.psalt = val;
+            },
+            get pstarter() {
+                if (this.isWeights) {
+                    this.hidden.pstarter = this.starter / this.totalFlour * 100;
+                }
+                return this.hidden.pstarter;
+            },
+            set pstarter(val) {
+                this.hidden.pstarter = val;
+            },
+            get flour() {
+                if (this.usingVWG) {
+                    return this.hidden.flour;
+                }
+                if (this.isPercents) {
+                    // this.hidden.flour = this.pflour / 100  * this.totalFlour;
+                    this.hidden.flour = this.totalFlour - this.levainFlour;
+                } else {
+
+                }
+                return Math.round(this.hidden.flour);
+            },
+            set flour(val) {
+                this.hidden.flour = val;
+            },
+            get water() {
+                if (this.isPercents) {
+                    this.hidden.water = this.totalWater - this.levainWater;
+                } else {
+                    // this.hidden.water = parseInt(parseFloat((this.hydration * this.totalWeight) / (1 + this.hydration)).toFixed(0));
+                }
+                return Math.round(this.hidden.water);
+            },
+            set water(val) {
+                this.hidden.water = val;
+            },
+            get vwg() {
+                return Math.round(this.hidden.vwg);
+            },
+            set vwg(val) {
+                this.hidden.vwg = val;
+            },
+
+            get salt() {
+                if (this.isPercents) {
+                    this.hidden.salt = this.psalt / 100 * this.totalFlour;
+                }
+                return Math.round(this.hidden.salt);
+            },
+            set salt(val) {
+                this.hidden.salt = val;
+            },
+            get totalWeight() {
+                if (this.isWeights) {
+                    this.hidden.totalWeight = this.totalFlour + this.totalWater + parseInt(this.salt);
+                }
+                return Math.round(this.hidden.totalWeight);
+            },
+            set totalWeight(val) {
+                this.hidden.totalWeight = parseInt(val);
+            },
+            get starter() {
+                if (this.isPercents) {
+                    this.hidden.starter = this.pstarter / 100 * this.totalFlour;
+                }
+                return Math.round(this.hidden.starter);
+            },
+            set starter(val) {
+                this.hidden.starter = val;
+            },
+            get useVWG() {
+                return this.usingVWG;
+            },
+            set useVWG(val) {
+                this.usingVWG = val;
+                if (this.usingVWG === true) {
+                    var pflour = this.VWG.percentFlour;
+                    var pvwg = this.VWG.percentVWG;
+                    var vwg = this.VWG.vwgGrams(this.totalFlour);
+                    this.flour = this.flour - vwg;
+                    this.vwg = vwg;
+                } else {
+                    this.flour = this.hidden.flour + this.hidden.vwg;
+                    this.pflour = 100;
+                    this.vwg = 0;
+                    this.pvwg = 0;
+                }
+            },
+            levainHydration: 100,
+            get levainFlour() {
+                if (this.starter === 0) return 0;
+                return ((this.starter * 100) / (100 + this.levainHydration));
+            },
+            get levainWater() {
+                return this.hidden.starter - this.levainFlour;
+            },
+            get totalFlour() {
+                if (this.isWeights) {
+                    return parseInt(this.hidden.flour) + parseInt(this.hidden.vwg) + parseInt(this.levainFlour);
+                }
+                return parseInt(parseFloat(this.totalWeight * 100 / (100 + (this.hydration))));
+            },
+            get totalWater() {
+                if (this.isPercents) {
+                    return Math.round(this.hydration / (100 + this.hydration) * this.totalWeight);
+                }
+                return parseInt(this.hidden.water) + parseInt(this.levainWater);
+            },
+            get hydration() {
+                if (this.isWeights) {
+                    this.hidden.hydration = parseFloat(parseInt(this.totalWater) / parseInt(this.totalFlour) * 100);
+                } else {
+
+                }
+                return this.hidden.hydration;
+            },
+            set hydration(val) {
+                this.hidden.hydration = parseFloat(val);
+            },
+            get isPercents() {
+                return this.computationType === 'percents';
+            },
+            get isWeights() {
+                return this.computationType === 'weights';
+            },
+            get percentsInputClass() {
+                return {
+                    'w-16': true,
+                    'text-right': true,
+                    'px-2': true,
+                    'bg-opacity-25': this.isWeights,
+                    'bg-white': true,
+                }
+            },
+            get weightsInputClass() {
+                return {
+                    'w-16': true,
+                    'text-right': true,
+                    'px-2': true,
+                    'bg-opacity-25': this.isPercents,
+                    'bg-white': true,
+                }
+            },
+            get dump() {
+                return JSON.stringify([this.VWG, this.totalFlour, this.levainFlour]);
+            },
+            get tabWeights() {
+                if (this.isWeights) {
+                    return 0
+                }
+                return -1;
+            },
+            get tabPercents() {
+                if (this.isPercents) {
+                    return 0
+                }
+                return -1;
+            },
+            VWG: {
+                targetPercentProtein: 12.5,
+                flourPercentProtein: 10,
+                vitalGlutenPercentProtein: 76.6,
+                get partsVWG() {
+                    return this.targetPercentProtein - this.flourPercentProtein;
+                },
+                get partsFlour() {
+                    return this.vitalGlutenPercentProtein - this.targetPercentProtein;
+                },
+                get totalParts() {
+                    return this.partsVWG + this.partsFlour;
+                },
+                get percentFlour() {
+                    return this.partsFlour / this.totalParts;
+                },
+                get percentVWG() {
+                    return this.partsVWG / this.totalParts;
+                },
+                vwgGrams(totalWeight) {
+                    return Math.round(this.percentVWG * totalWeight)
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
