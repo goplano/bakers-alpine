@@ -47,7 +47,7 @@
         <form action="#" onsubmit="return false;" class="p-1 m-4 max-w-lg">
             <div class="my-3">
                 <label for="totalweight">Total weight: </label>
-                <input type="text" id="totalweight"
+                <input type="text" width="5" id="totalweight"
                        x-model="totalWeight"
                        :class="percentsInputClass"
                        :tabindex="tabPercents"
@@ -59,7 +59,7 @@
             </div>
             <div class="my-3">
                 <span x-text="totalWater"></span>g  / <span x-text="totalFlour"></span>g  =
-                <input type="text" id="pTotalWater"
+                <input type="text" width="5" id="pTotalWater"
                        :class="percentsInputClass"
                        :tabindex="tabPercents"
                        x-model="hydration"
@@ -80,7 +80,7 @@
                     <tr>
                         <td class="py-2 px-2"><label for="flour">flour</label></td>
                         <td class="py-2 px-2">
-                            <input type="text" id="flour"
+                            <input type="text" width="5" id="flour"
                                    x-model="flour"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
@@ -88,7 +88,7 @@
                         </td>
                         <td class="py-2 px-2">
                             <label for="pflour" class="sr-only">Percent Flour </label>
-                            <input type="text" id="pflour"
+                            <input type="text" width="5" id="pflour"
                                    x-model="pflour"
                                    :class="percentsInputClass"
                                    :tabindex="tabPercents"
@@ -98,14 +98,14 @@
                     <tr id="vwg-input-row" x-show="useVWG">
                         <td class="py-2 px-2"><label for="vwg">VWG</label></td>
                         <td class="py-2 px-2">
-                            <input type="text" id="vwg" readonly="readonly" x-model="vwg"
+                            <input type="text" width="5" id="vwg" readonly="readonly" x-model="vwg"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
                         <td class="py-2 px-2">
                             <label for="pvwg" class="sr-only">Percent Vital Wheat Gluten </label>
-                            <input type="text" id="pvwg"
+                            <input type="text" width="5" id="pvwg"
                                    name="vwg" x-model="pvwg"
                                    :class="percentsInputClass"
                                    :tabindex="tabPercents"
@@ -115,14 +115,14 @@
                     <tr data-type="water">
                         <td class="py-2 px-2"><label for="water">water</label></td>
                         <td class="py-2 px-2">
-                            <input type="text" id="water" name="water" x-model="water"
+                            <input type="text" width="5" id="water" name="water" x-model="water"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
                         <td class="py-2 px-2">
                             <label for="pwater" class="sr-only">Percent Water </label>
-                            <input type="text" id="pwater" name="pwater"
+                            <input type="text" width="5" id="pwater" name="pwater"
                                    x-model="pwater"
                                    :class="percentsInputClass"
                                    :tabindex="tabPercents"
@@ -132,14 +132,14 @@
                     <tr data-type="salt">
                         <td class="py-2 px-2"><label for="salt">salt</label></td>
                         <td class="py-2 px-2">
-                            <input type="text" id="salt" name="salt" x-model="salt"
+                            <input type="text" width="5" id="salt" name="salt" x-model="salt"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
                         <td class="py-2 px-2">
                             <label for="psalt" class="sr-only">Percent Salt </label>
-                            <input type="text" id="psalt" name="psalt"
+                            <input type="text" width="5" id="psalt" name="psalt"
                                    x-model="psalt"
                                    :class="percentsInputClass"
                                    :tabindex="tabPercents"
@@ -148,7 +148,7 @@
                     </tr>
                     <tr data-type="starter">
                         <td class="py-2 px-2"><label for="starter">starter</label></td>
-                        <td class="py-2 px-2"><input type="text" id="starter" name="starter" x-model="starter"
+                        <td class="py-2 px-2"><input type="text" width="5" id="starter" name="starter" x-model="starter"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
@@ -156,7 +156,7 @@
                         <td class="py-2 px-2">
                             <label for="pstarter" class="sr-only">Percent Starter </label>
                             <input id="pstarter" name="pstarter"
-                                   type="text" x-model="pstarter"
+                                   type="text" width="5" x-model="pstarter"
                                    :class="percentsInputClass"
                                    :tabindex="tabPercents"
                                    x-bind:readonly="isWeights">
