@@ -15,7 +15,7 @@
     <meta property="og:url" content="https://calc.suesucia.com/">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:type" content="website"/>
-    <meta property="description" content="Simple sourdough hydration calculator"/>
+    <meta name="description" content="Simple sourdough hydration calculator"/>
     <link href="main.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
 </head>
@@ -76,7 +76,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td class="py-2 px-2"><label for="flour"></label>flour</td>
+                        <td class="py-2 px-2"><label for="flour">flour</label></td>
                         <td class="py-2 px-2">
                             <input type="text" id="flour"
                                    x-model="flour"
@@ -85,7 +85,7 @@
                                    x-bind:readonly="isPercents">
                         </td>
                         <td class="py-2 px-2">
-                            <label for="pflour" class="hidden">Percent Flour </label>
+                            <label for="pflour" class="sr-only">Percent Flour </label>
                             <input type="text" id="pflour"
                                    x-model="pflour"
                                    :class="percentsInputClass"
@@ -102,7 +102,7 @@
                                    x-bind:readonly="isPercents">
                         </td>
                         <td class="py-2 px-2">
-                            <label for="pvwg" class="hidden">Percent Vital Wheat Gluten </label>
+                            <label for="pvwg" class="sr-only">Percent Vital Wheat Gluten </label>
                             <input type="text" id="pvwg"
                                    name="vwg" x-model="pvwg"
                                    :class="percentsInputClass"
@@ -119,7 +119,7 @@
                                    x-bind:readonly="isPercents">
                         </td>
                         <td class="py-2 px-2">
-                            <label for="pwater" class="hidden">Percent Water </label>
+                            <label for="pwater" class="sr-only">Percent Water </label>
                             <input type="text" id="pwater" name="pwater"
                                    x-model="pwater"
                                    :class="percentsInputClass"
@@ -136,7 +136,7 @@
                                    x-bind:readonly="isPercents">
                         </td>
                         <td class="py-2 px-2">
-                            <label for="psalt" class="hidden">Percent Salt </label>
+                            <label for="psalt" class="sr-only">Percent Salt </label>
                             <input type="text" id="psalt" name="psalt"
                                    x-model="psalt"
                                    :class="percentsInputClass"
@@ -152,7 +152,7 @@
                                    x-bind:readonly="isPercents">
                         </td>
                         <td class="py-2 px-2">
-                            <label for="pstarter" class="hidden">Percent Starter </label>
+                            <label for="pstarter" class="sr-only">Percent Starter </label>
                             <input id="pstarter" name="pstarter"
                                    type="text" x-model="pstarter"
                                    :class="percentsInputClass"
