@@ -55,13 +55,15 @@
                        x-on:input.debounce.750="calculate">
             </div>
             <div class="my-3">
-                <span x-text="totalWater"></span>g water / <span x-text="totalFlour"></span>g flour =
+                 water / flour = <label for="pTotalWater">Hydration</label>
+            </div>
+            <div class="my-3">
+                <span x-text="totalWater"></span>g  / <span x-text="totalFlour"></span>g  =
                 <input type="text" id="pTotalWater"
                        :class="percentsInputClass"
                        :tabindex="tabPercents"
                        x-model="hydration"
                        x-bind:readonly="isWeights"> %
-                <label for="pTotalWater">Hydration</label>
             </div>
 
             <div class="bg-transparent border-0 rounded-md p-4 flex justify-center h-64">
