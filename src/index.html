@@ -4,8 +4,20 @@
     <meta charset="UTF-8">
     <title>Sourdough Hyrdation Calculator using alpinejs</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
+    <link rel="manifest" href="./site.webmanifest">
+
+    <meta property="og:title" content="Sourdough Hyrdation Calculator (using alpinejs)">
+    <meta property="og:description" content="Calculate hrydration from weights, or, weights from hydration.">
+    <meta property="og:image" content="https://calc.suesucia.com/android-chrome-512x512.png">
+    <meta property="og:url" content="https://calc.suesucia.com/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:type" content="website"/>
+    <meta property="description" content="Simple sourdough hydration calculator"/>
     <link href="main.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.js" defer></script>
 </head>
 <body class="h-full">
 <div class="mx-auto p-4  flex justify-items-center items-center content-center h-full" x-data="bakers()">
@@ -64,16 +76,17 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><label for="mainflour"></label>flour</td>
+                        <td><label for="flour"></label>flour</td>
                         <td>
-                            <input type="text" id="mainflour"
+                            <input type="text" id="flour"
                                    x-model="flour"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
                         <td>
-                            <input type="text" id="pmainflour"
+                            <label for="pflour" class="hidden">Percent Flour </label>
+                            <input type="text" id="pflour"
                                    x-model="pflour"
                                    :class="percentsInputClass"
                                    :tabindex="tabPercents"
@@ -81,15 +94,16 @@
                         </td>
                     </tr>
                     <tr id="vwg-input-row" x-show="useVWG">
-                        <td><label for="addlflour">VWG</label></td>
+                        <td><label for="vwg">VWG</label></td>
                         <td>
-                            <input type="text" id="addlflour" readonly="readonly" x-model="vwg"
+                            <input type="text" id="vwg" readonly="readonly" x-model="vwg"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
                         <td>
-                            <input type="text" id="paddlflour"
+                            <label for="pvwg" class="hidden">Percent Vital Wheat Gluten </label>
+                            <input type="text" id="pvwg"
                                    name="vwg" x-model="pvwg"
                                    :class="percentsInputClass"
                                    :tabindex="tabPercents"
@@ -105,6 +119,7 @@
                                    x-bind:readonly="isPercents">
                         </td>
                         <td>
+                            <label for="pwater" class="hidden">Percent Water </label>
                             <input type="text" id="pwater" name="pwater"
                                    x-model="pwater"
                                    :class="percentsInputClass"
@@ -121,6 +136,7 @@
                                    x-bind:readonly="isPercents">
                         </td>
                         <td>
+                            <label for="psalt" class="hidden">Percent Salt </label>
                             <input type="text" id="psalt" name="psalt"
                                    x-model="psalt"
                                    :class="percentsInputClass"
@@ -136,6 +152,7 @@
                                    x-bind:readonly="isPercents">
                         </td>
                         <td>
+                            <label for="pstarter" class="hidden">Percent Starter </label>
                             <input id="pstarter" name="pstarter"
                                    type="text" x-model="pstarter"
                                    :class="percentsInputClass"

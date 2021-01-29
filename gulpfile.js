@@ -68,14 +68,28 @@ function clean(cb) {
     cb();
 }
 
+function copyImages(cb) {
+   src('./src/images/**/*.png')
+        .pipe(dest('./dist'));
+   cb();
+};
+
+function copyData(cb) {
+    src('./src/site.webmanifest')
+        .pipe(dest('./dist'));
+    cb();
+};
 
 exports.dev = series(
     devHTML,
-    devStyles
+    devStyles,
+    copyImages,
+    copyData
 );
 exports.clean = clean;
 exports.livePreview = livePreview;
 exports.build = series(
     prodStyles,
-    devHTML
+    devHTML,
+    copyImages, copyData
 );
