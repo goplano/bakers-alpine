@@ -17,7 +17,7 @@
     <meta property="og:type" content="website"/>
     <meta property="description" content="Simple sourdough hydration calculator"/>
     <link href="main.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.0/alpine.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.0/dist/alpine.min.js" defer></script>
 </head>
 <body class="h-full">
 <div class="mx-auto p-4  flex justify-items-center items-center content-center h-full" x-data="bakers()">
@@ -45,7 +45,7 @@
         </div>
 
         <form action="#" onsubmit="return false;" class="p-1 m-4 max-w-lg">
-            <div class="my-2">
+            <div class="my-3">
                 <label for="totalweight">Total weight: </label>
                 <input type="text" id="totalweight"
                        x-model="totalWeight"
@@ -54,7 +54,7 @@
                        x-bind:readonly="isWeights"
                        x-on:input.debounce.750="calculate">
             </div>
-            <div class="my-2">
+            <div class="my-3">
                 <span x-text="totalWater"></span>g water / <span x-text="totalFlour"></span>g flour =
                 <input type="text" id="pTotalWater"
                        :class="percentsInputClass"
@@ -64,7 +64,7 @@
                 <label for="pTotalWater">Hydration</label>
             </div>
 
-            <div class="bg-transparent border-0 rounded-md p-4 flex justify-center h-48">
+            <div class="bg-transparent border-0 rounded-md p-4 flex justify-center h-64">
 
                 <table class="table-auto">
                     <thead>
@@ -76,15 +76,15 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><label for="flour"></label>flour</td>
-                        <td>
+                        <td class="py-2 px-2"><label for="flour"></label>flour</td>
+                        <td class="py-2 px-2">
                             <input type="text" id="flour"
                                    x-model="flour"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
-                        <td>
+                        <td class="py-2 px-2">
                             <label for="pflour" class="hidden">Percent Flour </label>
                             <input type="text" id="pflour"
                                    x-model="pflour"
@@ -94,14 +94,14 @@
                         </td>
                     </tr>
                     <tr id="vwg-input-row" x-show="useVWG">
-                        <td><label for="vwg">VWG</label></td>
-                        <td>
+                        <td class="py-2 px-2"><label for="vwg">VWG</label></td>
+                        <td class="py-2 px-2">
                             <input type="text" id="vwg" readonly="readonly" x-model="vwg"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
-                        <td>
+                        <td class="py-2 px-2">
                             <label for="pvwg" class="hidden">Percent Vital Wheat Gluten </label>
                             <input type="text" id="pvwg"
                                    name="vwg" x-model="pvwg"
@@ -111,14 +111,14 @@
                         </td>
                     </tr>
                     <tr data-type="water">
-                        <td><label for="water">water</label></td>
-                        <td>
+                        <td class="py-2 px-2"><label for="water">water</label></td>
+                        <td class="py-2 px-2">
                             <input type="text" id="water" name="water" x-model="water"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
-                        <td>
+                        <td class="py-2 px-2">
                             <label for="pwater" class="hidden">Percent Water </label>
                             <input type="text" id="pwater" name="pwater"
                                    x-model="pwater"
@@ -128,14 +128,14 @@
                         </td>
                     </tr>
                     <tr data-type="salt">
-                        <td><label for="salt">salt</label></td>
-                        <td>
+                        <td class="py-2 px-2"><label for="salt">salt</label></td>
+                        <td class="py-2 px-2">
                             <input type="text" id="salt" name="salt" x-model="salt"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
-                        <td>
+                        <td class="py-2 px-2">
                             <label for="psalt" class="hidden">Percent Salt </label>
                             <input type="text" id="psalt" name="psalt"
                                    x-model="psalt"
@@ -145,13 +145,13 @@
                         </td>
                     </tr>
                     <tr data-type="starter">
-                        <td><label for="starter">starter</label></td>
-                        <td><input type="text" id="starter" name="starter" x-model="starter"
+                        <td class="py-2 px-2"><label for="starter">starter</label></td>
+                        <td class="py-2 px-2"><input type="text" id="starter" name="starter" x-model="starter"
                                    :class="weightsInputClass"
                                    :tabindex="tabWeights"
                                    x-bind:readonly="isPercents">
                         </td>
-                        <td>
+                        <td class="py-2 px-2">
                             <label for="pstarter" class="hidden">Percent Starter </label>
                             <input id="pstarter" name="pstarter"
                                    type="text" x-model="pstarter"
